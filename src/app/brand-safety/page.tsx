@@ -8,8 +8,8 @@ import {
   brandSafetyCategories,
   brandSafetySummary,
   unsafeDomainsList,
-  recentlyAddedDomains,
-  recentlyRemovedDomains,
+  // recentlyAddedDomains,
+  // recentlyRemovedDomains,
   riskCategoryTrends,
   domainRiskDistribution
 } from '@/data/brand_safety_data';
@@ -125,7 +125,7 @@ const CategoryDonutChart = ({ data }: { data: typeof brandSafetySummary.category
 const RiskCategoryTrendChart = ({ data }: { data: typeof riskCategoryTrends }) => {
   // データ変換
   const formattedData = data.map(item => {
-    const result = { date: item.date } as Record<string, any>;
+    const result = { date: item.date } as Record<string, string | number>;
     item.categoryBreakdown.forEach((count, index) => {
       const category = brandSafetyCategories[index];
       if (category) {

@@ -8,12 +8,13 @@ import {
   digitalKPISummary,
   digitalTimeSeriesData,
   digitalMediaPerformance,
-  digitalAudiencePerformance,
-  digitalDevicePerformance,
-  digitalCreativePerformance,
-  digitalRegionPerformance,
-  digitalOptimizationRecommendations,
-  digitalCompetitiveAnalysis
+  // 未使用の変数をコメントアウト
+  // digitalAudiencePerformance,
+  // digitalDevicePerformance,
+  // digitalCreativePerformance,
+  // digitalRegionPerformance,
+  // digitalOptimizationRecommendations,
+  // digitalCompetitiveAnalysis
 } from '@/data/digital_ad_data';
 
 // Flexboxを使用したグリッドの代替
@@ -34,12 +35,13 @@ const FlexItem = styled(Box)(({ theme }) => ({
   },
 }));
 
-const FlexItemHalf = styled(Box)(({ theme }) => ({
+// FlexItemHalfは現在使用されていないのでコメントアウト
+/* const FlexItemHalf = styled(Box)(({ theme }) => ({
   flex: '1 1 100%',
   [theme.breakpoints.up('md')]: {
     flex: '1 1 calc(50% - 12px)',
   },
-}));
+})); */
 
 // KPIカードコンポーネント
 const KPICard = ({ title, value, target, change, changeType = 'percent', color }: { 
@@ -119,7 +121,18 @@ const KPICard = ({ title, value, target, change, changeType = 'percent', color }
 };
 
 // 時系列データチャートコンポーネント
-const TimeSeriesChart = ({ data, timeUnit }: { data: any[], timeUnit: 'daily' | 'weekly' | 'monthly' }) => {
+const TimeSeriesChart = ({ data, timeUnit }: { 
+  data: Array<{
+    date?: string;
+    week?: string;
+    month?: string;
+    impressions: number;
+    clicks: number;
+    ctr: number | string;
+    convRate: number | string;
+  }>, 
+  timeUnit: 'daily' | 'weekly' | 'monthly' 
+}) => {
   // 時間単位に応じたX軸のキー名を取得
   const getXAxisKey = () => {
     switch (timeUnit) {

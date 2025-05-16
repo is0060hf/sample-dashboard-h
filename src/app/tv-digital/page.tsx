@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Box, Typography, Tabs, Tab, Paper, Card, CardContent, Chip } from '@mui/material';
+import { Box, Typography, Tabs, Tab, Paper, Card, CardContent } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
 import {
@@ -9,7 +9,7 @@ import {
   tvAdvertisingDetails,
   digitalAdvertisingDetails,
   tvDigitalOverlap,
-  integratedEffectAnalysis
+  // integratedEffectAnalysis
 } from '@/data/tv_digital_data';
 
 // Flexboxを使用したグリッドの代替
@@ -77,7 +77,7 @@ const KPICard = ({ title, value, subValue, icon, color }: { title: string, value
 };
 
 // リーチ推移チャートコンポーネント
-const ReachTrendChart = ({ tvData, digitalData }: { tvData: any[], digitalData: any[] }) => {
+const ReachTrendChart = () => {
   // テレビとデジタルのリーチデータを作成
   const tvReachData = tvAdvertisingDetails.weeklyTrend;
   const digitalReachData = digitalAdvertisingDetails.weeklyTrend;
@@ -115,7 +115,7 @@ const ReachTrendChart = ({ tvData, digitalData }: { tvData: any[], digitalData: 
 };
 
 // クロスデバイスリーチ分析チャートコンポーネント
-const CrossDeviceReachChart = ({ data }: { data: any[] }) => {
+const CrossDeviceReachChart = () => {
   // クロスデバイスデータを作成
   const crossDeviceData = [
     { name: 'テレビのみ', value: tvDigitalOverlap.overallOverlap.tvOnly },
@@ -154,7 +154,7 @@ const CrossDeviceReachChart = ({ data }: { data: any[] }) => {
 };
 
 // メディア効果分析チャートコンポーネント
-const MediaEffectChart = ({ data }: { data: any[] }) => {
+const MediaEffectChart = () => {
   // メディア効果データを作成
   const mediaEffectData = [
     { name: 'テレビのみ', awareness: 65, consideration: 45, purchase: 25 },
@@ -185,7 +185,7 @@ const MediaEffectChart = ({ data }: { data: any[] }) => {
 };
 
 // オーディエンス分析チャートコンポーネント
-const AudienceAnalysisChart = ({ data }: { data: any[] }) => {
+const AudienceAnalysisChart = () => {
   // オーディエンスデータを作成
   const audienceData = [
     { name: 'F1（20-34歳女性）', value: tvDigitalOverlap.demographicOverlap[0].totalUniqueReach, color: '#FF6384' },
@@ -298,19 +298,19 @@ export default function TvDigitalDashboard() {
             {/* チャートセクション */}
             <FlexContainer>
               <FlexItemHalf>
-                <ReachTrendChart tvData={[]} digitalData={[]} />
+                <ReachTrendChart />
               </FlexItemHalf>
               <FlexItemHalf>
-                <CrossDeviceReachChart data={[]} />
+                <CrossDeviceReachChart />
               </FlexItemHalf>
             </FlexContainer>
 
             <FlexContainer>
               <FlexItemHalf>
-                <MediaEffectChart data={[]} />
+                <MediaEffectChart />
               </FlexItemHalf>
               <FlexItemHalf>
-                <AudienceAnalysisChart data={[]} />
+                <AudienceAnalysisChart />
               </FlexItemHalf>
             </FlexContainer>
           </>

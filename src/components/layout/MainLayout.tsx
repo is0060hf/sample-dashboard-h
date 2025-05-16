@@ -14,9 +14,7 @@ import {
   ListItemIcon, 
   ListItemText, 
   Toolbar, 
-  Typography,
-  useMediaQuery,
-  useTheme
+  Typography
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -36,8 +34,6 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 

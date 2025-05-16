@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Tabs, Tab, Paper, Card, CardContent, Chip, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, Cell } from 'recharts';
 
 // モックデータのインポート
 import { xaiModelSummary, xaiFeatureImportance, xaiPredictionExplanations, xaiModelPerformanceHistory } from '@/data/xai_data';
@@ -72,7 +72,7 @@ const KPICard = ({ title, value, status, description, color }: {
 };
 
 // 特徴量重要度チャートコンポーネント
-const FeatureImportanceChart = ({ data }: { data: any[] }) => {
+const FeatureImportanceChart = ({ data }: { data: typeof xaiFeatureImportance }) => {
   return (
     <Paper sx={{ p: 2, height: '100%' }}>
       <Typography variant="h6" gutterBottom>特徴量重要度</Typography>
@@ -95,7 +95,7 @@ const FeatureImportanceChart = ({ data }: { data: any[] }) => {
 };
 
 // 混同行列コンポーネント
-const ConfusionMatrixChart = ({ data }: { data: any }) => {
+const ConfusionMatrixChart = () => {
   // 混同行列のデータ
   const confusionMatrix = {
     labels: ["離反なし", "離反あり"],
@@ -130,18 +130,18 @@ const ConfusionMatrixChart = ({ data }: { data: any }) => {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
         <Box sx={{ display: 'flex', mb: 1 }}>
           <Box sx={{ width: 100 }}></Box>
-          {confusionMatrix.labels.map((label: string, index: number) => (
+          {confusionMatrix.labels.map((label, index) => (
             <Box key={index} sx={{ width: 80, textAlign: 'center' }}>
               <Typography variant="body2" fontWeight="bold">予測: {label}</Typography>
             </Box>
           ))}
         </Box>
-        {confusionMatrix.labels.map((actualLabel: string, i: number) => (
+        {confusionMatrix.labels.map((actualLabel, i) => (
           <Box key={i} sx={{ display: 'flex', mb: 1 }}>
             <Box sx={{ width: 100, display: 'flex', alignItems: 'center' }}>
               <Typography variant="body2" fontWeight="bold">実際: {actualLabel}</Typography>
             </Box>
-            {confusionMatrix.labels.map((predictedLabel: string, j: number) => (
+            {confusionMatrix.labels.map((predictedLabel, j) => (
               <Box 
                 key={j} 
                 sx={{ 
@@ -167,7 +167,7 @@ const ConfusionMatrixChart = ({ data }: { data: any }) => {
 };
 
 // 予測説明コンポーネント
-const PredictionExplanationChart = ({ data }: { data: any[] }) => {
+const PredictionExplanationChart = ({ data }: { data: typeof xaiPredictionExplanations }) => {
   // 選択された予測インデックス
   const [selectedIndex, setSelectedIndex] = useState(0);
   
@@ -175,11 +175,11 @@ const PredictionExplanationChart = ({ data }: { data: any[] }) => {
   const selectedPrediction = data[selectedIndex];
   
   // 特徴量の寄与度データ
-  const contributionData = selectedPrediction.topFactors.map((item: any) => ({
+  const contributionData = selectedPrediction.topFactors.map((item) => ({
     feature: item.factor,
     contribution: item.impact,
     fill: item.impact >= 0 ? '#4caf50' : '#f44336'
-  })).sort((a: any, b: any) => Math.abs(b.contribution) - Math.abs(a.contribution));
+  })).sort((a, b) => Math.abs(b.contribution) - Math.abs(a.contribution));
 
   return (
     <Paper sx={{ p: 2, height: '100%' }}>
@@ -241,7 +241,7 @@ const PredictionExplanationChart = ({ data }: { data: any[] }) => {
             return [`${formattedValue}`, '寄与度'];
           }} />
           <Bar dataKey="contribution" name="寄与度" fill="#8884d8">
-            {contributionData.slice(0, 10).map((entry: any, index: number) => (
+            {contributionData.slice(0, 10).map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ))}
           </Bar>
@@ -252,7 +252,7 @@ const PredictionExplanationChart = ({ data }: { data: any[] }) => {
 };
 
 // モデルパフォーマンス履歴チャートコンポーネント
-const ModelPerformanceHistoryChart = ({ data }: { data: any[] }) => {
+const ModelPerformanceHistoryChart = ({ data }: { data: typeof xaiModelPerformanceHistory }) => {
   return (
     <Paper sx={{ p: 2, height: '100%' }}>
       <Typography variant="h6" gutterBottom>モデルパフォーマンス履歴</Typography>
@@ -350,7 +350,7 @@ export default function XAIDashboard() {
                 <FeatureImportanceChart data={xaiFeatureImportance} />
               </FlexItemHalf>
               <FlexItemHalf>
-                <ConfusionMatrixChart data={{}} />
+                <ConfusionMatrixChart />
               </FlexItemHalf>
             </FlexContainer>
 
